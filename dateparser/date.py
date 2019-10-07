@@ -326,8 +326,12 @@ class _DateLocaleParser:
             return False
         if date_data["date_obj"] and not isinstance(date_data["date_obj"], datetime):
             return False
-        if date_data["period"] not in ("time", "day", "week", "month", "year"):
+        if not date_obj['period']:
             return False
+        for period_part in date_obj['period'].split('_'):
+            if period_part not in ('time', 'day', 'week', 'month', 'year'):
+                return False
+
         return True
 
 
