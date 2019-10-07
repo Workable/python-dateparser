@@ -133,10 +133,13 @@ class _no_spaces_parser(object):
 
     @classmethod
     def _get_period(cls, format_string):
+        period_strs = []
         for pname, pdrv in sorted(cls.period.items(), key=lambda x: x[0]):
             for drv in pdrv:
                 if drv in format_string:
-                    return pname
+                    period_strs.append(pname)
+        if period_strs:
+            return '_'.join(period_strs)
         else:
             return 'year'
 
@@ -276,20 +279,21 @@ class _parser(object):
                     setattr(self, attr, int(token))
 
     def _get_period(self):
-        if self.settings.RETURN_TIME_AS_PERIOD:
-            if getattr(self, 'time', None):
-                return 'time'
-
+        period_strs = []
         for period in ['time', 'day']:
             if getattr(self, period, None):
-                return 'day'
+                period_strs.append('day')
+                break
 
         for period in ['month', 'year']:
             if getattr(self, period, None):
-                return period
+                period_strs.append(period)
+
+        if period_strs:
+            return '_'.join(period_strs)
 
         if self._results():
-            return 'day'
+            period_strs.append('day')
 
     def _get_datetime_obj(self, **params):
         try:
