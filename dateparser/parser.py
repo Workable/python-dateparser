@@ -46,6 +46,7 @@ date_order_chart = {
     'MYD': '%m%y%d',
     'YDM': '%y%d%m',
     'YMD': '%y%m%d',
+    'MY': '%m%y'
 }
 
 
@@ -58,6 +59,7 @@ def resolve_date_order(order, lst=None):
         'MYD': ['month', 'year', 'day'],
         'YDM': ['year', 'day', 'month'],
         'YMD': ['year', 'month', 'day'],
+        'MY': ['month', 'year'],
     }
 
     return chart_list[order] if lst else date_order_chart[order]
@@ -102,7 +104,8 @@ class _no_spaces_parser:
         '%Y%m%d', '%Y%d%m', '%m%Y%d',
         '%m%d%Y', '%d%Y%m', '%d%m%Y',
         '%y%m%d', '%y%d%m', '%m%y%d',
-        '%m%d%y', '%d%y%m', '%d%m%y'
+        '%m%d%y', '%d%y%m', '%d%m%y',
+        '%m%Y', '%m%y'
     ]
 
     _preferred_formats = ['%Y%m%d%H%M', '%Y%m%d%H%M%S', '%Y%m%d%H%M%S.%f']
@@ -134,6 +137,7 @@ class _no_spaces_parser:
             '%y%d%m': sorted(self._all, key=lambda x: x.lower().startswith('%y%d%m'), reverse=True),
             '%d%m%y': sorted(self._all, key=lambda x: x.lower().startswith('%d%m%y'), reverse=True),
             '%d%y%m': sorted(self._all, key=lambda x: x.lower().startswith('%d%y%m'), reverse=True),
+            '%m%y': sorted(self._all, key=lambda x: x.lower().startswith('%m%y'), reverse=True),
         }
 
     @classmethod
