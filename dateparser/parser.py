@@ -54,13 +54,24 @@ date_order_chart = {
 
 
 def resolve_date_order(order, lst=None):
+    chart = {
+        'MDY': '%m%d%y',
+        'MYD': '%m%y%d',
+        'YMD': '%y%m%d',
+        'YDM': '%y%d%m',
+        'DMY': '%d%m%y',
+        'DYM': '%d%y%m',
+        'MY': '%m%y'
+    }
+
     chart_list = {
-        "DMY": ["day", "month", "year"],
-        "DYM": ["day", "year", "month"],
-        "MDY": ["month", "day", "year"],
-        "MYD": ["month", "year", "day"],
-        "YDM": ["year", "day", "month"],
-        "YMD": ["year", "month", "day"],
+        'MDY': ['month', 'day', 'year'],
+        'MYD': ['month', 'year', 'day'],
+        'YMD': ['year', 'month', 'day'],
+        'YDM': ['year', 'day', 'month'],
+        'DMY': ['day', 'month', 'year'],
+        'DYM': ['day', 'year', 'month'],
+        'MY': ['month', 'year'],
     }
 
     return chart_list[order] if lst else date_order_chart[order]
@@ -102,18 +113,11 @@ time_parser = _time_parser()
 
 class _no_spaces_parser:
     _dateformats = [
-        "%Y%m%d",
-        "%Y%d%m",
-        "%m%Y%d",
-        "%m%d%Y",
-        "%d%Y%m",
-        "%d%m%Y",
-        "%y%m%d",
-        "%y%d%m",
-        "%m%y%d",
-        "%m%d%y",
-        "%d%y%m",
-        "%d%m%y",
+        '%Y%m%d', '%Y%d%m', '%m%Y%d',
+        '%m%d%Y', '%d%Y%m', '%d%m%Y',
+        '%y%m%d', '%y%d%m', '%m%y%d',
+        '%m%d%y', '%d%y%m', '%d%m%y',
+        '%m%Y', '%m%y'
     ]
 
     _preferred_formats = ["%Y%m%d%H%M", "%Y%m%d%H%M%S", "%Y%m%d%H%M%S.%f"]
@@ -164,6 +168,7 @@ class _no_spaces_parser:
             "%d%y%m": sorted(
                 self._all, key=lambda x: x.lower().startswith("%d%y%m"), reverse=True
             ),
+            '%m%y': sorted(self._all, key=lambda x: x.lower().startswith('%m%y'), reverse=True),
         }
 
     @classmethod
