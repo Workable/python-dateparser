@@ -145,7 +145,7 @@ class _no_spaces_parser:
         period_strs = []
         for pname, pdrv in sorted(cls.period.items(), key=lambda x: x[0]):
             for drv in pdrv:
-                if drv in format_string:
+                if drv in format_string and pname not in period_strs:
                     period_strs.append(pname)
         if period_strs:
             return '_'.join(period_strs)
